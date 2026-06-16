@@ -70,7 +70,7 @@ rule bbduk_filter:
         """
         
         mkdir -p {OUTPUT_DIR}/filtered
-        module avail BBMap/39.84 
+        module load BBMap/39.84 
         bbduk.sh \
             in={input.read1} \
             in2={input.read2} \
