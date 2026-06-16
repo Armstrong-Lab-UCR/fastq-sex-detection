@@ -110,6 +110,7 @@ rule bwa_mem_sort:
         """
         mkdir -p {OUTPUT_DIR}/bam
         module load bwa/0.7.19
+        module load samtools/1.22.1
         bwa mem -M -t {threads} {input.reference} {input.read1} {input.read2} | \
             samtools view -bS - | \
             samtools sort -@ {threads} -o {output.bam} -
