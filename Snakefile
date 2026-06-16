@@ -49,6 +49,7 @@ rule bwa_index:
         runtime=600
     shell:
         """
+        module load bwa/0.7.19
         bwa index -a bwtsw {input.reference}
         """
 
@@ -67,8 +68,9 @@ rule bbduk_filter:
         runtime=600
     shell:
         """
+        
         mkdir -p {OUTPUT_DIR}/filtered
-
+        module avail BBMap/39.84 
         bbduk.sh \
             in={input.read1} \
             in2={input.read2} \
@@ -94,7 +96,7 @@ rule bwa_mem_sort:
     shell:
         """
         mkdir -p {OUTPUT_DIR}/bam
-
+        module load bwa/0.7.19
         bwa mem -M -t {threads} {input.reference} {input.read1} {input.read2} | \
             samtools view -bS - | \
             samtools sort -@ {threads} -o {output.bam} -
@@ -112,6 +114,7 @@ rule samtools_index:
         runtime=300
     shell:
         """
+        module load samtools/1.22.1
         samtools index {input.bam}
         """
 
@@ -129,7 +132,7 @@ rule whole_genome_coverage:
     shell:
         """
         mkdir -p {OUTPUT_DIR}/coverage
-
+        module load samtools/1.22.1
         samtools coverage {input.bam} \
             -o {output.cov} \
             -m \
@@ -150,7 +153,7 @@ rule sdr_coverage:
     shell:
         """
         mkdir -p {OUTPUT_DIR}/coverage
-
+        module load samtools/1.22.1
         samtools coverage \
             -r {SDR_REGION} \
             {input.bam} \
