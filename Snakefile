@@ -67,17 +67,30 @@ rule bbduk_filter:
         mem_mb=32000,
         runtime=600
     shell:
-        """
-        
+        r"""
         mkdir -p {OUTPUT_DIR}/filtered
-        module load BBMap/39.84 
+        mkdir -p {OUTPUT_DIR}/tmp
+
+        module load BBMap/39.84
+
+        zcat {input.read1} > {OUTPUT_DIR}/tmp/{wildcards.sample}_R1.fastq
+        zcat {input.read2} > {OUTPUT_DIR}/tmp/{wildcards.sample}_R2.fastq
+
         bbduk.sh \
-            in={input.read1} \
-            in2={input.read2} \
-            ref={input.kmer_ref} \
-            outm={output.read1} \
-            outm2={output.read2} \
-            k=21
+                in={OUTPUT_DIR}/tmp/{wildcards.sample}_R1.fastq \
+                in2={OUTPUT_DIR}/tmp/{wildcards.sample}_R2.fastq \
+                ref={input.kmer_ref} \
+                outm={output.read1} \
+                outm2={output.read2} \
+                k=21 \
+                t=1 \
+                pigz=f \
+                unpigz=f \
+                usejni=f
+
+        rm -f {OUTPUT_DIR}/tmp/{wildcards.sample}_R1.fastq
+        rm -f {OUTPUT_DIR}/tmp/{wildcards.sample}_R2.fastq
+
         """
 
 
