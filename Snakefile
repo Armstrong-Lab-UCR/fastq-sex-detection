@@ -181,15 +181,22 @@ rule summarize_sdr_coverage:
     output:
         summary=f"{OUTPUT_DIR}/coverage/SDR_coverage_summary.csv",
         plot=f"{OUTPUT_DIR}/coverage/SDR_coverage_plot.pdf"
+    log:
+        f"{OUTPUT_DIR}/logs/summarize_sdr_coverage.log"
     threads: 1
     resources:
         mem_mb=8000,
         runtime=300
     shell:
-        """
+        r"""
+        mkdir -p {OUTPUT_DIR}/coverage
+        mkdir -p {OUTPUT_DIR}/logs
+
         Rscript scripts/summarize_sdr_coverage.R \
             {OUTPUT_DIR}/coverage \
             {input.samplesheet} \
             {output.summary} \
-            {output.plot}
+            {output.plot} \
+            > {log} 2>&1
         """
+
