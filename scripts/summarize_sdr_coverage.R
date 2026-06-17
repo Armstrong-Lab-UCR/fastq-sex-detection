@@ -76,20 +76,27 @@ p <- ggplot(
   aes(
     x = mean_SDR_Coverage,
     y = mean_SDR_Depth,
-    color = Sample_Sex
+    color = expected_sex
   )
 ) +
-  geom_point(size = 1.5, alpha = 0.85) +
-  labs(
-    x = "Mean SDR Coverage",
-    y = "Mean SDR Depth",
-    color = "Sample Sex"
+  geom_point(size = 3, alpha = 0.8) +
+  geom_text(
+    aes(label = sample),
+    size = 3,
+    vjust = -0.5,
+    check_overlap = TRUE
   ) +
-  theme_bw()
-
-ggsave(
-  filename = output_plot,
-  plot = p,
-  width = 6,
-  height = 5
-)
+  scale_color_manual(
+    values = c(
+      "M" = "#0072B2",
+      "F" = "#D55E00",
+      "U" = "grey60"
+    ),
+    name = "Expected sex"
+  ) +
+  theme_bw() +
+  labs(
+    x = "Mean SDR coverage",
+    y = "Mean SDR depth"
+  )
+ggsave(output_plot, p, width = 10, height = 5)
