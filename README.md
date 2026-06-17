@@ -25,9 +25,9 @@ samplesheet: "/path/to/samplesheet.csv"
 ### Example `samplesheet.csv`
 
 ```csv
-sample,read1,read2
-sample1,/full/path/sample1_R1.fastq.gz,/full/path/sample1_R2.fastq.gz
-sample2,/full/path/sample2_R1.fastq.gz,/full/path/sample2_R2.fastq.gz
+sample,read1,read2,expected_sex
+sample1,/full/path/sample1_R1.fastq.gz,/full/path/sample1_R2.fastq.gz,M
+sample2,/full/path/sample2_R1.fastq.gz,/full/path/sample2_R2.fastq.gz,U
 ```
 
 ## Pipeline Steps
@@ -108,10 +108,10 @@ If a sample was sequenced across multiple libraries, treat each library as a sep
 For example:
 
 ```csv
-sample,read1,read2
-sample1,/path/sample1_R1.fastq.gz,/path/sample1_R2.fastq.gz
-sample2_l1,/path/sample2_l1_R1.fastq.gz,/path/sample2_l1_R2.fastq.gz
-sample2_l2,/path/sample2_l2_R1.fastq.gz,/path/sample2_l2_R2.fastq.gz
+sample,read1,read2,expected_sex
+sample1,/path/sample1_R1.fastq.gz,/path/sample1_R2.fastq.gz,M
+sample2_l1,/path/sample2_l1_R1.fastq.gz,/path/sample2_l1_R2.fastq.gz,M
+sample2_l2,/path/sample2_l2_R1.fastq.gz,/path/sample2_l2_R2.fastq.gz,M
 ```
 
 Each row must have a unique sample identifier.
