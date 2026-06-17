@@ -32,6 +32,8 @@ rule all:
         expand(f"{OUTPUT_DIR}/bam/{{sample}}.sorted.bam.bai", sample=SAMPLES),
         expand(f"{OUTPUT_DIR}/coverage/{{sample}}.cov_out", sample=SAMPLES),
         expand(f"{OUTPUT_DIR}/coverage/{{sample}}.sdr.cov", sample=SAMPLES),
+        f"{OUTPUT_DIR}/coverage/SDR_coverage_summary.csv",
+        f"{OUTPUT_DIR}/coverage/SDR_coverage_plot.pdf"
 
 
 rule bwa_index:
