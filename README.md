@@ -1,12 +1,12 @@
-# Kmer Filter + Mapping Pipeline
+# Kmer Identification + Mapping Pipeline
 
-This pipeline filters paired-end FASTQ files against a k-mer reference using `bbduk`, maps the retained reads to a reference genome using `bwa mem`, generates sorted/indexed BAM files, and calculates both whole-genome and region-specific coverage statistics using `samtools`.
+This pipeline identifies Ymers in paired-end FASTQ files using a Y-mer reference file and the software `bbduk`. It then maps the retained reads to a reference genome using `bwa mem`, generates sorted/indexed BAM files, and calculates both whole-genome and region-specific coverage statistics using `samtools`. 
 
 ## Input Files
 
-You only need 2 input files: a `config.yaml` specifying paths to required files and a `samplesheet.csv` containing sample names and FASTQ file paths.
+You only need 2 input files: a `config.yaml` specifying paths to required files and a `samplesheet.csv` containing sample names and FASTQ file paths. In the config file you must identify the Y chromosome and the sex determining region on Y.
 
-Your samplesheet can have any columns you want, but it **MUST** contain the following fields named *exactly* `sample`, `read1`, and `read2` (case insensitive).
+Your samplesheet can have any columns you want, but it **MUST** contain the following fields named *exactly* `sample`, `read1`, `read2`, and expected_sex (case insensitive).
 
 ### Example `config.yaml`
 
@@ -34,13 +34,14 @@ sample2,/full/path/sample2_R1.fastq.gz,/full/path/sample2_R2.fastq.gz,U
 
 For each sample, the pipeline performs:
 
-1. K-mer filtering using `bbduk`
+1. Y-mer identification using `bbduk`
 2. Reference indexing using `bwa index`
 3. Mapping filtered reads with `bwa mem`
 4. Sorting BAM files with `samtools sort`
 5. Indexing BAM files with `samtools index`
 6. Whole-genome coverage calculation
 7. Region-specific coverage calculation
+8. Plotting of the depth and coverage on SDRY of each sample colored by their expected sex.
 
 ## Output Files
 
